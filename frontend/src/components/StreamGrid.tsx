@@ -1,0 +1,2 @@
+import type { Stream,StreamStatus } from '../types/stream'; import { StreamCard } from './StreamCard';
+export function StreamGrid({streams,onChange,onRemove}:{streams:Stream[];onChange:(id:string,status:StreamStatus,message?:string)=>void;onRemove:(id:string)=>void}){if(!streams.length)return <section className="empty"><div>◉</div><h2>No streams connected</h2><p>Add an RTSP stream above to start monitoring your cameras.</p></section>;return <section className="grid">{streams.map(s=><StreamCard key={s.id} stream={s} onChange={onChange} onRemove={onRemove}/>)}</section>}

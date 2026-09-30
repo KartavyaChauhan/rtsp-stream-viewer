@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/addstreamform.tsx","./src/components/streamcard.tsx","./src/components/streamgrid.tsx","./src/components/videoplayer.tsx","./src/hooks/usestreamsocket.ts","./src/services/api.ts","./src/types/stream.ts"],"version":"5.9.3"}

@@ -1,0 +1,5 @@
+import type { Stream } from '../types/stream';
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+async function request<T>(path:string, options?:RequestInit):Promise<T> { const response=await fetch(`${API}/api${path}`, {headers:{'Content-Type':'application/json'}, ...options}); if(!response.ok){const body=await response.json().catch(()=>({})); throw new Error(body.detail || body.url?.[0] || 'The server could not complete that request.');} return response.status===204 ? undefined as T : response.json(); }
+export const streamsApi={ list:()=>request<Stream[]>('/streams/'), create:(url:string,name:string)=>request<Stream>('/streams/',{method:'POST',body:JSON.stringify({url,name})}), remove:(id:string)=>request<void>(`/streams/${id}/`,{method:'DELETE'}), control:(id:string,action:'connect'|'disconnect')=>request<Stream>(`/streams/${id}/${action}/`,{method:'POST'}), playbackUrl:(path:string)=>`${API}${path}` };
+export const wsUrl=(id:string)=>`${(import.meta.env.VITE_WS_URL || 'ws://localhost:8000').replace(/\/$/,'')}/ws/streams/${id}/`;
