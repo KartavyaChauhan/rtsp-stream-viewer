@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: skylark-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health/
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://kartavyachauhan.github.io
+      - key: RTSP_ALLOWED_HOSTS
+        sync: false
+      - key: MAX_ACTIVE_STREAMS
+        value: "4"
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: skylark-redis
+          property: connectionString
+  - type: redis
+    name: skylark-redis
+    plan: free
+    ipAllowList: []
